@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content="" name="description" />
+        <meta content="" name="hak" />
+        <!-- BEGIN GLOBAL MANDATORY STYLES -->
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+                <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script src="../static/js/photo-gallery.js"></script>
+  <style>
+video, input {
+    display: block;
+}
+
+input {
+    width: 100%;       
+}
+
+.info {
+    background-color: aqua;            
+}
+
+.error {
+    background-color: red;
+    color: white;
+}
+
+ul {         
+          padding:0 0 0 0;
+          margin:0 0 0 0;
+      }
+      ul li {     
+          list-style:none;
+          margin-bottom:25px;           
+      }
+      ul li img {
+          cursor: pointer;
+      }
+      .modal-body {
+          padding:5px !important;
+      }
+      .modal-content {
+          border-radius:0;
+      }
+      .modal-dialog img {
+          text-align:center;
+          margin:0 auto;
+      }
+    .controls{          
+        width:50px;
+        display:block;
+        font-size:11px;
+        padding-top:8px;
+        font-weight:bold;          
+    }
+    .next {
+        float:right;
+        text-align:right;
+    }
+      /*override modal for demo only*/
+      .modal-dialog {
+          max-width:500px;
+          padding-top: 90px;
+      }
+      @media screen and (min-width: 768px){
+          .modal-dialog {
+              width:500px;
+              padding-top: 90px;
+          }          
+      }
+      @media screen and (max-width:1500px){
+          #ads {
+              display:none;
+          }
+      }
+     .center { margin: 0 auto; width: 800px; }
+</style> 
+</head>
+<body style="width: 98%;">
+  <div class="alert alert-warning alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+      <strong>Warning!</strong> Highly network intensive task, good network connection should be there. May see some unexpected behaviour due to packet loss. 
+  </div> 
+        
+        <video id="video" width="550" height="400" autoplay style="margin: auto;"> </video>
+        <canvas id="canvas"  width="550" height="400" style="visibility:hidden; position:fixed;"></canvas> 
+    <img id="Img" width="550" height="400" style="display: none;"/>
+    <div id="result">
+    <canvas id="canvas-capture" width="550" height="400" style="visibility:hidden;position: fixed;"></canvas>
+      <div>
+        <table id="result-table" class="table table-striped">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div> 
+    <div class="note note-success">
+          <h1 style="text-align: center;">
+                  Detected Anomalies
+          </h1>
+    </div>
+    <ul id="imgGallery" class="row">
+            
+    </ul> 
+    
+    <div id="imgGallery" > 
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">         
+          <div class="modal-body">                
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->    
+    </div>
+  <!--  /home/inbox-dih/Desktop/firstapp/app/template 
+                https://drive.google.com/uc?export=download&id=0BwBQxE8OL_1bWkM5ZEtiZndLMlk -->
+  <!-- style="display: none;"
+        style="visibility:hidden;"-->    
+<!--                        Start  -->
+<script>
+        // Put event listeners into place
+        window.addEventListener("DOMContentLoaded", function() {
+      // Grab elements, create settings, etc.
+            var canvas = document.getElementById('canvas-capture');
+            var context = canvas.getContext('2d');
+            var video = document.getElementById('video');
+            var mediaConfig =  { video: true };
+            var errBack = function(e) {
+              console.log('An error has occurred!', e)
+            };
+
+      // Put video listeners into place
+            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia(mediaConfig).then(function(stream) {
+                    video.src = window.URL.createObjectURL(stream);
+                    video.play();
+                });
+            }
+
+            /* Legacy code below! */
+            else if(navigator.getUserMedia) { // Standard
+                navigator.getUserMedia(mediaConfig, function(stream) {
+                   video.src = stream;
+                   video.play();
+               }, errBack);
+      } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+        navigator.webkitGetUserMedia(mediaConfig, function(stream){
+          video.src = window.webkitURL.createObjectURL(stream);
+          video.play();
+        }, errBack);
+      } else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
+        navigator.mozGetUserMedia(mediaConfig, function(stream){
+          video.src = window.URL.createObjectURL(stream);
+          video.play();
+        }, errBack);
+      }
+            function takeImage(){
+                context.drawImage(video, 0, 0, 640, 480);
+                //var image = context.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                var dataURL = canvas.toDataURL();
+                document.getElementById('Img').src = dataURL;
+                my_function();
+                };
+            window.setInterval(function(){
+                takeImage();
+                }, 3000);
+        }, true);
+        
+        var escapeHtml = (function (String) {
+        var escapeMap = {
+            '&': '&amp;',
+            "'": '&#x27;',
+            '`': '&#x60;',
+            '"': '&quot;',
+            '<': '&lt;',
+            '>': '&gt;'
+        };
+        var escapeReg = '[';
+        var reg;
+        for (var p in escapeMap) 
+        {
+            if (escapeMap.hasOwnProperty(p)) 
+            {
+              escapeReg += p;
+            }
+        }
+        escapeReg += ']';
+        reg = new RegExp(escapeReg, 'g');
+        return function escapeHtml (str) {
+        str = (str === null || str === undefined) ? '' : '' + str;
+        return str.replace(reg, function (match) {
+          return escapeMap[match];
+        });
+      };
+    }(String));
+    $(function() {
+      var API_KEY = 'AIzaSyCcH3YA0F9onEDw3yLyRsYxTNymS50S5M0';
+      var MAX_RESULT_NUM = 10;
+      var LINE_COLOR = "rgb(0, 255, 0)";
+      var FONT_SIZE = 24;
+      var STRATEGIES = {
+        FACE_DETECTION: {
+          resultAttrName: 'faceAnnotations',
+          outputAttrNames: ['boundingPoly', 'detectionConfidence', 'angerLikelihood', 'blurredLikelihood', 'headwearLikelihood', 'joyLikelihood', 'sorrowLikelihood', 'surpriseLikelihood', 'underExposedLikelihood'],
+          drawImage: true
+        },
+        LANDMARK_DETECTION: {
+          resultAttrName: 'landmarkAnnotations',
+          outputAttrNames: ['mid', 'locale', 'description', 'score', 'confidence', 'topicality'],
+          drawImage: false
+        },
+        LOGO_DETECTION: {
+          resultAttrName: 'logoAnnotations',
+          outputAttrNames: ['mid', 'locale', 'description', 'score', 'confidence', 'topicality'],
+          drawImage: false
+        },
+        LABEL_DETECTION: {
+          resultAttrName: 'labelAnnotations',
+          //outputAttrNames: ['mid', 'locale', 'description', 'score', 'condidence', 'topicality'],
+          outputAttrNames: ['description', 'score'],
+          drawImage: false
+        },
+        TEXT_DETECTION: {
+          resultAttrName: 'textAnnotations',
+          //outputAttrNames: ['boundingPoly', 'mid', 'locale', 'description', 'score', 'confidence', 'topicality'],
+          outputAttrNames: ['boundingPoly', 'description', 'score'],
+          drawImage: true
+        },
+      }
+      function clearResult() {
+        $('#result-table thead').find('tr').remove();
+        $('#result-table tbody').find('tr').remove();
+      }
+      function showResult(results, attrNames) 
+      {
+        var row = '<tr><th>#</th>';
+        attrNames.forEach(function(name) 
+        {
+          row += '<th>' + escapeHtml(name) + '</th>'    
+        });
+        row += '</tr>';
+        $('#result-table thead').append(row);
+        if (!results) 
+        {
+          return;
+        }
+        results.forEach(function(elem, i) 
+        {
+          row = '<tr><td>' + (i + 1) + '</td>';
+          attrNames.forEach(function(name) 
+          {
+            var attrVal = elem[name];
+            if ((typeof attrVal) === 'object') 
+            {
+              row += '<td>' + escapeHtml(JSON.stringify(attrVal)) + '</td>'
+
+            } 
+            else 
+            {
+              row += '<td>' + escapeHtml(attrVal) + '</td>'
+            }
+          });
+          row += '</tr>'
+          $('#result-table tbody').append(row);
+        });
+      }
+      function drawImageWithDetectedArea(canvas, results, imgSend) {
+        if (!results) {
+          return;
+        }
+        var img = new Image();
+        //img.src = $('#Img').attr('src');
+        img.src = imgSend;
+        //document.getElementById("ImgTest").src = imgSend;
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext('2d');        
+        ctx.drawImage(img, 0, 0);
+        /*results.forEach(function(elem, index) {
+          var vertices = elem.boundingPoly.vertices;
+          ctx.beginPath();
+          ctx.moveTo(vertices[0].x, vertices[0].y)  
+          for (var i = 1; i < vertices.length; i++) {
+            ctx.lineTo(vertices[i].x, vertices[i].y); 
+          }
+          ctx.closePath();
+          ctx.strokeStyle = LINE_COLOR;
+          ctx.lineWidth = 3;
+          ctx.stroke();
+          ctx.fillStyle = LINE_COLOR;
+          ctx.font = FONT_SIZE
+          ctx.fillText(index + 1, vertices[vertices.length-1].x, vertices[vertices.length-1].y); 
+          });
+        //AddImageToLibrary();*/
+        convertCanvasToImage(canvas);
+
+      }
+      $('#input-img').change(function() {
+        var file = $(this).prop('files')[0];
+        var imgElem = document.getElementById('Img');
+        if (file) {
+          var reader = new FileReader();
+          reader.onload = function() {
+            imgElem.attr('src', reader.result);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          imgElem.attr('src', '');
+        }
+      });
+        
+        my_function = null;
+      //$('#submit-btn').click(function() {
+        $(function() {
+        function my_fun(){  
+        var apiType = "LABEL_DETECTION";
+        //var imgDataUrl = $('#Img').attr('src');
+        var imgDataUrl = document.getElementById("Img").src;
+        var encodedImg = imgDataUrl.substring(imgDataUrl.indexOf(',') + 1);       
+        var params = {
+          requests: 
+          [
+            {
+              image: { 
+                content: encodedImg 
+              },
+              features: 
+              [
+                { 
+                  type: apiType, 
+                  maxResults: MAX_RESULT_NUM 
+                }
+              ]
+            }
+          ]
+        };
+        var strategy = STRATEGIES[apiType];
+        $.ajax({
+          type: 'POST',
+          url: 'https://vision.googleapis.com/v1/images:annotate?key=' + API_KEY,
+          contentType: 'application/json',
+          data: JSON.stringify(params),
+          success: function(res) {
+
+            var apiResponse = res.responses[0];     
+            if (apiResponse.error) 
+            {
+                $('#result').append('<div id="error-msg" class="alert alert-danger">API ERROR</div>');
+                return;
+            }  
+          if(apiType == "LABEL_DETECTION" && apiResponse['labelAnnotations'] != null )
+            {
+                var arr = new Array();
+                var results;
+                for(var i =0;i<apiResponse['labelAnnotations'].length;i++)
+                {
+                    var Good = ['smile','nose','face','eyebrow','person'];
+                    //console.log((apiResponse['labelAnnotations'][i]['description']));
+                      //var res = Good.test(apiResponse['labelAnnotations'][i]['description']);
+                    console.log(apiResponse['labelAnnotations'][i]['score']);
+                    if(Good.indexOf(apiResponse['labelAnnotations'][i]['description']) != -1)
+                    {
+                      results = apiResponse[strategy.resultAttrName][i];
+                      arr.push(results);
+                    }
+                }
+                if(arr.length!=0)
+                {    
+                  //showResult(arr, strategy.outputAttrNames);
+                  var canvas = $('#canvas')[0]; 
+                  //var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                  //document.getElementById("ImgTest").src = imgDataUrl;
+                  drawImageWithDetectedArea(canvas, arr, imgDataUrl); 
+                  return;
+                }
+                arr = new Array();
+                for(var i =0;i<apiResponse['textAnnotations'].length;i++)
+                {
+                  var strPattern = getPattern(apiResponse['textAnnotations'][i]['description']);
+                  if(strPattern)
+                  {
+                    results = apiResponse[strategy.resultAttrName][i];
+                    arr.push(results);
+                  }
+                }
+                if(arr.length!=0)
+                {    
+                  //showResult(arr, strategy.outputAttrNames);
+                  var canvas = $('#canvas')[0]; 
+                  //document.getElementById("ImgTest").src = imgDataUrl;
+                  drawImageWithDetectedArea(canvas, arr, imgDataUrl); 
+                  return;
+                }
+            }
+      
+      clearResult();      
+        var results = apiResponse[strategy.resultAttrName];
+        //console.log(results);
+        showResult(results, strategy.outputAttrNames);
+        if (strategy.drawImage) 
+        {
+          var canvas = $('#canvas')[0];
+          drawImageWithDetectedArea(canvas, results);
+        }
+      }
+    });
+return false;
+}
+my_function = my_fun;
+});
+
+});
+//Ending
+
+// Converts canvas to an image
+function convertCanvasToImage(canvas) 
+{
+  var image = new Image();
+  image.src = canvas.toDataURL("image/png");
+  if(image.src != "data:,")
+  {
+    $('<li class="col-lg-2 col-md-2 col-sm-3 col-xs-4"><img class="img-responsive" src="'+image.src+'"/></li>'
+    ).appendTo("#imgGallery");
+    load_js();
+    return image;
+  }
+}
+
+function load_js()
+   {
+      var head= document.getElementsByTagName('head')[0];
+      var script= document.createElement('script');
+      script.type= 'text/javascript';
+      script.src= '../static/js/photo-gallery.js';
+      head.appendChild(script);
+   }
+</script> 
+</body>
+</html>

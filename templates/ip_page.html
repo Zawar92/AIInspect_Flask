@@ -1,0 +1,430 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+    <!--<![endif]-->
+    <!-- BEGIN HEAD -->
+
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <meta content="" name="description" />
+        <meta content="" name="author" />
+
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <!-- BEGIN GLOBAL MANDATORY STYLES -->
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+        <link href="../static/ip_page/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="../static/ip_page/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="../static/ip_page/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="../static/ip_page/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+        <link href="../static/ip_page/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+        <!-- END GLOBAL MANDATORY STYLES -->
+        <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <link href="../static/ip_page/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
+        <link href="../static/ip_page/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
+        <link href="../static/ip_page/assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+        <link href="../static/ip_page/assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />
+        <!-- END PAGE LEVEL PLUGINS -->
+        <!-- BEGIN THEME GLOBAL STYLES -->
+        <link href="../static/ip_page/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+        <link href="../static/ip_page/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+        <!-- END THEME GLOBAL STYLES -->
+        <!-- BEGIN THEME LAYOUT STYLES -->
+        <link href="../static/ip_page/assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
+        <link href="../static/ip_page/assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
+        <link href="../static/ip_page/assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+        <!-- END THEME LAYOUT STYLES -->
+        <link rel="shortcut icon" href="favicon.ico" /> 
+        <link href="../static/ip_page/lity-2.3.0/dist/lity.css" rel="stylesheet">
+        <script src="../static/ip_page/lity-2.3.0/vendor/jquery.js"></script>
+        <script src="../static/ip_page/lity-2.3.0/dist/lity.js"></script>
+        <style>
+        table1 {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+        </style>
+    </head>
+
+        <!-- head ending -->
+        
+        
+    <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
+        <div class="page-content">
+                    <div class="clearfix">
+                    </div>
+              <div class="row">
+                        <div class="col-sm-6">
+                            <div class="portlet light bordered">
+                                <div class="portlet-title">
+                                    <div class="caption font-red-sunglo">
+                                        <span class="caption-subject bold uppercase"> Drone: DX-225 </span>
+                                        <img src="../static/ip_page/marker.jpg"></img>
+                                    </div>
+                                </div>
+                                <div class="portlet-body form">
+                                    <div class="form-group form-md-line-input has-warning">
+                                        <div class="input-group">
+                                            <span class="input-group-btn btn-left">
+                                                <button class="btn blue-madison" type="button" onClick="goTo1();">Go!</button>
+                                            </span>
+                                            <div class="input-group-control">
+                                                <input type="text" class="form-control edited" id="box1">
+                                                <label for="form_control_1">Connection ID</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="" id = "hrf1" data-lity>
+                                       <img src="" style="width: 100%;height: inherit;" id="frame1">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                         <script>
+                            function goTo1() {
+                                var input = get("box1").value;
+                                var frame = document.getElementById("frame1");
+                                var hrf = get("hrf1");
+
+                                if(input.match(/\bhttp(.)*/)) 
+                                {
+                                    frame.src = input;
+                                    hrf.href = frame.src;
+                                    
+                                } 
+                                else 
+                                {
+                                    input = "http://" + input;
+                                    frame.src = input;
+                                    hrf.href = frame.src;
+                                }      
+                            }
+
+                            function get(id) 
+                            {
+                                return document.getElementById(id);    
+                            }  
+                        </script>
+                        <div class="col-sm-6">
+                            <div class="portlet light bordered">
+                                <div class="portlet-title">
+                                    <div class="caption font-red-sunglo">
+                                        <span class="caption-subject bold uppercase"> Drone: DX-230 </span>
+                                        <img src="../static/ip_page/marker.jpg"></img>
+                                    </div>
+                                </div>
+                                <div class="portlet-body form">
+                                    <div class="form-group form-md-line-input has-warning">
+                                        <div class="input-group">
+                                            <span class="input-group-btn btn-left">
+                                                <button class="btn blue-madison" type="button" onClick="goTo2();">Go!</button>
+                                            </span>
+                                            <div class="input-group-control">
+                                                <input type="text" class="form-control edited" id="box2">
+                                                <label for="form_control_1">Connection ID</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="" id = "hrf2" data-lity>
+                                       <img src="" style="width: 100%;height: inherit;" id="frame2">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            function goTo2() {
+                                var input = get("box2").value;
+                                var frame = document.getElementById("frame2");
+                                var hrf = get("hrf2");
+
+                                if(input.match(/\bhttp(.)*/)) 
+                                {
+                                    frame.src = input;
+                                    hrf.href = frame.src;
+                                    
+                                } 
+                                else 
+                                {
+                                    input = "http://" + input;
+                                    frame.src = input;
+                                    hrf.href = frame.src;
+                                }      
+                            }
+
+                            function get(id) 
+                            {
+                                return document.getElementById(id);    
+                            }  
+                        </script>
+                </div>
+                <div class="row">
+                        <div class="col-sm-6">
+                            <div class="portlet light bordered">
+                                <div class="portlet-title">
+                                    <div class="caption font-red-sunglo">
+                                        <span class="caption-subject bold uppercase"> Drone: DX-331</span>
+                                        <img src="../static/ip_page/marker.jpg"></img>
+                                    </div>
+                                </div>
+                                <div class="portlet-body form">
+                                    <div class="form-group form-md-line-input has-warning">
+                                        <div class="input-group">
+                                            <span class="input-group-btn btn-left">
+                                                <button class="btn blue-madison" type="button" onClick="goTo3();">Go!</button>
+                                            </span>
+                                            <div class="input-group-control">
+                                                <input type="text" class="form-control edited" id="box3">
+                                                <label for="form_control_1">Connection ID</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="" id = "hrf3" data-lity>    
+                                       <img src="" style="width: 100%;height: inherit;" id="frame3">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                       <script>
+                            function goTo3() {
+                                var input = get("box3").value;
+                                var frame = document.getElementById("frame3");
+                                var hrf = get("hrf3");
+
+                                if(input.match(/\bhttp(.)*/)) 
+                                {
+                                    frame.src = input;
+                                    hrf.href = frame.src;
+                                    
+                                } 
+                                else 
+                                {
+                                    input = "http://" + input;
+                                    frame.src = input;
+                                    hrf.href = frame.src;
+                                }      
+                            }
+
+                            function get(id) 
+                            {
+                                return document.getElementById(id);    
+                            }  
+                        </script>
+                        <div class="col-sm-6">
+                            <div class="portlet light bordered">
+                                <div class="portlet-title">
+                                    <div class="caption font-red-sunglo">
+                                        <span class="caption-subject bold uppercase"> Drone: DX-551 </span>
+                                        <img src="../static/ip_page/marker.jpg"></img>
+                                    </div>
+                                </div>
+                                <div class="portlet-body form">
+                                    <div class="form-group form-md-line-input has-warning">
+                                        <div class="input-group">
+                                            <span class="input-group-btn btn-left">
+                                                <button class="btn blue-madison" type="button" onClick="goTo4();">Go!</button>
+                                            </span>
+                                            <div class="input-group-control">
+                                                <input type="text" class="form-control edited" id="box4">
+                                                <label for="form_control_1">Connection ID</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="" id = "hrf4" data-lity>
+                                       <img src="" style="width: 100%;height: inherit;" id="frame4">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            function goTo4() {
+                                var input = get("box4").value;
+                                var frame = document.getElementById("frame4");
+                                var hrf = get("hrf4");
+
+                                if(input.match(/\bhttp(.)*/)) 
+                                {
+                                    frame.src = input;
+                                    hrf.href = frame.src;
+                                    
+                                } 
+                                else 
+                                {
+                                    input = "http://" + input;
+                                    frame.src = input;
+                                    hrf.href = frame.src;
+                                }      
+                            }
+
+                            function get(id) 
+                            {
+                                return document.getElementById(id);    
+                            }  
+                        </script>
+
+                    
+                </div>
+                <br />
+                <br/>
+                <h2>Anomalies Detected</h2>
+                <br/><br/><br/>
+                
+                
+                <div class="row">
+                        <div class="col-md-12">  
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>  
+                            <table class="table1">
+                              <tr>    
+                                <th>DroneID</th>                                                            
+                                <th>DroneName</th>                         
+                                <th>Latitude</th>
+                                <th>Longitude</th>
+                                <th>Date</th>
+                                <th>TimeStamp</th>
+                                <th>InspectionCategory</th>
+                                <th>InspectionArea</th>
+                              </tr>
+                            </table>
+                           <script>
+                            $(document).ready(function() {
+                              // Using the JSON format from your question
+                              var data = {
+                                "DroneID" : "Dj1234"   , 
+                                "DroneName" :"Phantom" ,
+                                "Lat":"59.34" ,
+                                "Long":"180.7",
+                                "Dte":"20-07-2017",
+                                "Time":"12:35:00",
+                                "InpectionCategory":"Naked Wire",
+                                "InspectionArea":"Inbox Consulting, Dawood Center",
+                              };
+                              var tr = $('<tr/>');
+                              
+                              $('.table1').append(tr);
+                              $(tr).append("<td>" + data.DroneID + "</td>");                           
+                              $(tr).append("<td>" + data.DroneName + "</td>");
+                              $(tr).append("<td>" + data.Lat + "</td>");
+                              $(tr).append("<td>" + data.Long + "</td>");
+                              $(tr).append("<td>" + data["Dte"] + "</td>");
+                              $(tr).append("<td>" + data.Timestamp + "</td>");
+                              $(tr).append("<td>" + data.InpectionCategory + "</td>");
+                              $(tr).append("<td>" + data.InspectionArea + "</td>");
+                            });
+                        </script>
+                        </div>
+                </div>
+
+                <script>
+                    var img_response = "../static/detect.png";
+                    function convertCanvasToImage(img_response) 
+                    {
+                      var image = new Image();
+                      image.src =img_response.toDataURL("image/png");
+                      console.log(img.src);
+                      if(image.src != "data:,")
+                      {
+                        $('<li class="col-lg-2 col-md-2 col-sm-3 col-xs-4"><img class="img-responsive" src="'+image.src+'"/></li>'
+                        ).appendTo("#imgGallery");
+                        load_js();
+                        return image;
+                      }
+                    
+                    function load_js()
+                    {
+                          var head= document.getElementsByTagName('head')[0];
+                          var script= document.createElement('script');
+                          script.type= 'text/javascript';
+                          script.src= '../static/gallery_assets/assets/photo-gallery.js';
+                          head.appendChild(script);
+                    }
+                    
+                </script>
+                <div class="row">
+                        <div class="col-sm-6 center">
+                            <ul id="imgGallery" class="row"></ul> 
+                            <a href="../static/detect1.png" data-lity >
+                                <img id="imgGaller" src="../static/detect1.png" style="width: 170%;height: inherit;" ></img>
+                            </a>
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">         
+                                  <div class="modal-body">                
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                </div>
+               
+        </div>
+        
+        <!-- BEGIN CORE PLUGINS -->
+        <script src="../static/ip_page/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+        <!-- END CORE PLUGINS -->
+        <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <script src="../static/ip_page/assets/global/plugins/moment.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/morris/morris.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/morris/raphael-min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/counterup/jquery.waypoints.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/counterup/jquery.counterup.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/amcharts/amcharts/amcharts.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/amcharts/amcharts/serial.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/amcharts/amcharts/pie.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/amcharts/amcharts/radar.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/amcharts/amcharts/themes/light.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/amcharts/amcharts/themes/patterns.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/amcharts/amcharts/themes/chalk.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/amcharts/ammap/ammap.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/amcharts/ammap/maps/js/worldLow.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/amcharts/amstockcharts/amstock.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/flot/jquery.flot.resize.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>
+        <!-- END PAGE LEVEL PLUGINS -->
+        <!-- BEGIN THEME GLOBAL SCRIPTS -->
+        <script src="../static/ip_page/assets/global/scripts/app.min.js" type="text/javascript"></script>
+        <!-- END THEME GLOBAL SCRIPTS -->
+        <!-- BEGIN PAGE LEVEL SCRIPTS -->
+        <script src="../static/ip_page/assets/pages/scripts/dashboard.min.js" type="text/javascript"></script>
+        <!-- END PAGE LEVEL SCRIPTS -->
+        <!-- BEGIN THEME LAYOUT SCRIPTS -->
+        <script src="../static/ip_page/assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
+        <script src="../static/ip_page/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+        <!-- END THEME LAYOUT SCRIPTS -->
+        <!-- Gallery -->
+
+        <!-- Gallery END-->
+    </body>
+
+</html>

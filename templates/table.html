@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+      
+ 	<head>
+ 	</head>
+ 	<body>
+ 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<table class="table1">
+		  <tr>
+		    <th>x</th>
+		    <th>x_offset</th>
+		    <th>y</th>
+		    <th>y_offset</th>
+		    <th>Frame</th>
+		    <th>DroneID</th>
+		    <th>DroneName</th>
+		    <th>Latitude</th>
+		    <th>Longitude</th>
+		    <th>TimeStamp</th>
+		    <th>InspectionCategory</th>
+		  </tr>
+		</table>
+		<script>
+			$(document).ready(function() {
+			  // Using the JSON format from your question
+			  var data = {
+			    "bbox": [{
+			        "x": "Abril",
+			        "x_offset": "13",
+			        "y": "Lisboa",
+			        "y_offset": "Lisboa",
+
+			    }],
+			    "Frame" :  "MIMEType",
+			    "DroneID" : "Dj1234"   , 
+			    "DroneName" :"Phantom" ,
+			    "Lat":"59.34" ,
+			    "Long":"180.7",
+			    "Timestamp":"12:35:00",
+			    "InpectionCategory":"Cross Wire"
+			  };
+			  var tr = $('<tr/>');
+			  // Loop through data.report instead of data
+			  for (var i = 0; i < data.bbox.length; i++) {
+			    
+			    
+			    // Indexing into data.report for each td element
+			    $(tr).append("<td>" + data.bbox[i]["x"] + "</td>");
+			    $(tr).append("<td>" + data.bbox[i]["x_offset"] + "</td>");
+			    $(tr).append("<td>" + data.bbox[i]["y"] + "</td>");
+			    $(tr).append("<td>" + data.bbox[i]["y_offset"] + "</td>");
+			    $('.table1').append(tr);
+			  }
+			  $(tr).append("<td>" + data.Frame + "</td>");
+			  $(tr).append("<td>" + data.DroneID + "</td>");
+			  $(tr).append("<td>" + data.DroneName + "</td>");
+			  $(tr).append("<td>" + data.Lat + "</td>");
+			  $(tr).append("<td>" + data.Long + "</td>");
+			  $(tr).append("<td>" + data.Timestamp + "</td>");
+			  $(tr).append("<td>" + data.InpectionCategory + "</td>");
+			});
+		</script>
+ 	</body>
+ </html>

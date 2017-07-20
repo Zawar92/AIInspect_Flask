@@ -1,0 +1,372 @@
+<!doctype html>
+<html>
+<head>
+  <title>WebRTC: Still photo capture demo</title>
+  <meta charset='utf-8'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../static/js/photo-gallery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <style>
+video, input {
+    display: block;
+}
+
+input {
+    width: 100%;       
+}
+
+.info {
+    background-color: aqua;            
+}
+
+.error {
+    background-color: red;
+    color: white;
+}
+
+ul {         
+          padding:0 0 0 0;
+          margin:0 0 0 0;
+      }
+      ul li {     
+          list-style:none;
+          margin-bottom:25px;           
+      }
+      ul li img {
+          cursor: pointer;
+      }
+      .modal-body {
+          padding:5px !important;
+      }
+      .modal-content {
+          border-radius:0;
+      }
+      .modal-dialog img {
+          text-align:center;
+          margin:0 auto;
+      }
+    .controls{          
+        width:50px;
+        display:block;
+        font-size:11px;
+        padding-top:8px;
+        font-weight:bold;          
+    }
+    .next {
+        float:right;
+        text-align:right;
+    }
+      /*override modal for demo only*/
+      .modal-dialog {
+          max-width:500px;
+          padding-top: 90px;
+      }
+      @media screen and (min-width: 768px){
+          .modal-dialog {
+              width:500px;
+              padding-top: 90px;
+          }          
+      }
+      @media screen and (max-width:1500px){
+          #ads {
+              display:none;
+          }
+      }
+     .center { margin: 0 auto; width: 800px; }
+</style> 
+</head>
+<body>
+    <div class="container">
+      <div style="visibility: hidden;z-index:-1;position:absolute"> 
+        <canvas id="canvas" width="640" height="480"></canvas>
+      </div>
+      <div width="640" height="480" style="float: left;">
+        <video id="video" width="640" height="480" autoplay> </video>
+        <img id="Img" width="640" height="480" style="display: none;"/>
+      </div>
+      <!--<button id="submit-btn" class="btn btn-primary">DETECT</button>-->
+      <div id="result" style="float: right; width: 450px; margin-top: 16px;">
+        <!--<h2>Result</h2>-->
+        <table id="result-table" class="table table-striped">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+        <!--  <canvas id="canvas" width="0" height="0"></canvas> -->
+      </div>
+    </div>
+    <ul id="imgGallery" class="row">
+            
+    </ul> 
+    
+    <div id="imgGallery" > 
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">         
+          <div class="modal-body">                
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->    
+    </div>
+  <script>
+        // Put event listeners into place
+        window.addEventListener("DOMContentLoaded", function() {
+      // Grab elements, create settings, etc.
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            var video = document.getElementById('video');
+            var mediaConfig =  { video: true };
+            var errBack = function(e) {
+              //console.log('An error has occurred!', e)
+            };
+
+      // Put video listeners into place
+            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia(mediaConfig).then(function(stream) {
+                    video.src = window.URL.createObjectURL(stream);
+                    video.play();
+                });
+            }
+
+            /* Legacy code below! */
+            else if(navigator.getUserMedia) { // Standard
+                navigator.getUserMedia(mediaConfig, function(stream) {
+                   video.src = stream;
+                   video.play();
+               }, errBack);
+      } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+        navigator.webkitGetUserMedia(mediaConfig, function(stream){
+          video.src = window.webkitURL.createObjectURL(stream);
+          video.play();
+        }, errBack);
+      } else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
+        navigator.mozGetUserMedia(mediaConfig, function(stream){
+          video.src = window.URL.createObjectURL(stream);
+          video.play();
+        }, errBack);w
+      }
+            function takeImage(){
+                context.drawImage(video, 0, 0, 640, 480);
+                //var image = context.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                var dataURL = canvas.toDataURL();
+                document.getElementById('Img').src = dataURL;
+                my_function();
+                };
+            window.setInterval(function(){
+                console.log("Fun called.");
+                takeImage();
+                }, 5000);
+        }, true);
+        
+        var escapeHtml = (function (String) {
+        var escapeMap = {
+            '&': '&amp;',
+            "'": '&#x27;',
+            '`': '&#x60;',
+            '"': '&quot;',
+            '<': '&lt;',
+            '>': '&gt;'
+        };
+        var escapeReg = '[';
+        var reg;
+        for (var p in escapeMap) 
+        {
+            if (escapeMap.hasOwnProperty(p)) 
+            {
+              escapeReg += p;
+            }
+        }
+        escapeReg += ']';
+        reg = new RegExp(escapeReg, 'g');
+        return function escapeHtml (str) {
+        str = (str === null || str === undefined) ? '' : '' + str;
+        return str.replace(reg, function (match) {
+          return escapeMap[match];
+        });
+      };
+    }(String));
+    $(function() {
+      var API_KEY = 'AIzaSyCcH3YA0F9onEDw3yLyRsYxTNymS50S5M0';
+      var MAX_RESULT_NUM = 10;
+      var LINE_COLOR = "rgb(0, 255, 0)";
+      var FONT_SIZE = 24;
+      var STRATEGIES = {
+        FACE_DETECTION: {
+          resultAttrName: 'faceAnnotations',
+          outputAttrNames: ['boundingPoly', 'detectionConfidence', 'angerLikelihood', 'blurredLikelihood', 'headwearLikelihood', 'joyLikelihood', 'sorrowLikelihood', 'surpriseLikelihood', 'underExposedLikelihood'],
+          drawImage: true
+        },
+        LANDMARK_DETECTION: {
+          resultAttrName: 'landmarkAnnotations',
+          outputAttrNames: ['mid', 'locale', 'description', 'score', 'confidence', 'topicality'],
+          drawImage: false
+        },
+        LOGO_DETECTION: {
+          resultAttrName: 'logoAnnotations',
+          outputAttrNames: ['mid', 'locale', 'description', 'score', 'confidence', 'topicality'],
+          drawImage: false
+        },
+        LABEL_DETECTION: {
+          resultAttrName: 'labelAnnotations',
+          //outputAttrNames: ['mid', 'locale', 'description', 'score', 'condidence', 'topicality'],
+          outputAttrNames: ['description', 'score'],
+          drawImage: false
+        },
+        TEXT_DETECTION: {
+          resultAttrName: 'textAnnotations',
+          outputAttrNames: ['boundingPoly', 'mid', 'locale', 'description', 'score', 'confidence', 'topicality'],
+          drawImage: true
+        },
+      }
+      function clearResult() 
+      {
+        $('#result-table thead').find('tr').remove();
+        $('#result-table tbody').find('tr').remove();
+      }
+      function showResult(results, attrNames) 
+      {
+        var row = '<tr><th>#</th>';
+        attrNames.forEach(function(name) 
+        {
+          row += '<th>' + escapeHtml(name) + '</th>'    
+        });
+        row += '</tr>';
+        $('#result-table thead').append(row);
+        if (!results) 
+        {
+          return;
+        }
+        results.forEach(function(elem, i) 
+        {
+          row = '<tr><td>' + (i + 1) + '</td>';
+          attrNames.forEach(function(name) 
+          {
+            var attrVal = elem[name];
+            if ((typeof attrVal) === 'object') 
+            {
+              row += '<td>' + escapeHtml(JSON.stringify(attrVal)) + '</td>'
+            } 
+            else 
+            {
+              row += '<td>' + escapeHtml(attrVal) + '</td>'
+              //console.log(attrVal);
+            }
+          });
+          row += '</tr>'
+          $('#result-table tbody').append(row);
+        });
+      }
+        my_function = null;
+      //$('#submit-btn').click(function() {
+        $(function() {
+        function my_fun(){  
+        var apiType = "LABEL_DETECTION";
+        //var imgDataUrl = $('#Img').attr('src');
+        var imgDataUrl = document.getElementById("Img").src;
+        var encodedImg = imgDataUrl.substring(imgDataUrl.indexOf(',') + 1);
+        
+        var params = {
+          requests: 
+          [
+            {
+              image: { 
+                content: encodedImg 
+              },
+              features: 
+              [
+                { 
+                  type: apiType, 
+                  maxResults: MAX_RESULT_NUM 
+                }
+              ]
+            }
+          ]
+        };
+        var strategy = STRATEGIES[apiType];
+        var Bad = ['mobile','electronic device', 'communication device','Pen','pen','Communication device','Mobile','Electronic device','sun','light']; 
+        $.ajax({
+          type: 'POST',
+          url: 'https://vision.googleapis.com/v1/images:annotate?key=' + API_KEY,
+          contentType: 'application/json',
+          data: JSON.stringify(params),
+          success: function(res) {
+
+            var apiResponse = res.responses[0];     
+            if (apiResponse.error) 
+            {
+                $('#result').append('<div id="error-msg" class="alert alert-danger">API ERROR</div>');
+                return;
+            }
+            if(apiType == "LABEL_DETECTION" && apiResponse['labelAnnotations'] != null )
+            {
+                var arr = new Array();
+                var results;
+                for(var i =0;i<apiResponse['labelAnnotations'].length;i++)
+                {
+                    var Good = ['Chair','Wood','Table','Mobile','communication device','electronic device',
+                    'smile','nose','face','eyebrow'];
+                    //console.log((apiResponse['labelAnnotations'][i]['description']));
+                      //var res = Good.test(apiResponse['labelAnnotations'][i]['description']);
+                      //console.log(apiResponse['labelAnnotations'][i]['description']);
+                    if(Good.indexOf(apiResponse['labelAnnotations'][i]['description']) != -1)
+                    {
+                      results = apiResponse[strategy.resultAttrName][i];
+                      arr.push(results);
+                      console.log('hello');
+                      takeImageGal();
+                    }
+                }
+            }
+        clearResult();      
+        var results = apiResponse[strategy.resultAttrName];
+        //console.log(results);
+        showResult(results, strategy.outputAttrNames);
+        if (strategy.drawImage) 
+        {
+          var canvas = $('#canvas')[0];
+          drawImageWithDetectedArea(canvas, results);
+        }
+      }
+    });
+return false;
+}
+my_function = my_fun;
+});
+//Ending
+});
+
+function takeImageGal()
+{
+  var image = new Image();
+  image.src = document.getElementById('Img');
+  if(image.src != "data:,")
+  {
+    $('<li class="col-lg-2 col-md-2 col-sm-3 col-xs-4"><img class="img-responsive" src="'+image.src+'"/></li>'
+    ).appendTo("#imgGallery");
+    load_js();
+    return image;
+  }
+}
+
+function load_js()
+   {
+      var head= document.getElementsByTagName('head')[0];
+      var script= document.createElement('script');
+      script.type= 'text/javascript';
+      script.src= '../static/js/photo-gallery.js';
+      head.appendChild(script);
+   }
+</script>
+</body>
+</html>

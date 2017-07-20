@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Featherlight – The ultra slim jQuery lightbox.</title>
+		<link href="assets/stylesheets/bootstrap.min.css" rel="stylesheet" />
+		<link type="text/css" rel="stylesheet" href="release/featherlight.min.css" />
+		<style type="text/css">
+			@media all {
+				/* override default feather style... */
+				.fixwidth {
+					background: rgba(256,256,256, 0.8);
+				}
+				.fixwidth .featherlight-content {
+					width: 500px;
+					padding: 25px;
+					color: #fff;
+					background: #111;
+				}
+				.fixwidth .featherlight-close {
+					color: #fff;
+					background: #333;
+				}
+
+			}
+			@media(max-width: 768px){
+				.fl-page h1 span { display: block; }
+				.fl-page .btn-download { float: none; margin-bottom: 1em; }
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="jumbotron">
+				<div class="btn-group">
+					<a class="btn btn-default" href="http://10.15.2.7:8080/video" data-featherlight="image">
+						Image
+					</a>
+				</div>
+			</div>
+		</div>
+		<script src="assets/javascripts/jquery-1.7.0.min.js"></script>
+		<script src="release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+	</body>
+</html>
